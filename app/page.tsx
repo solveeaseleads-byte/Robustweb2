@@ -25,7 +25,7 @@ export default function Home(){
  },[query]);
 
  useEffect(()=>{
-  function onClickOutside(e:MouseEvent){
+  function onClickOutside(e:Event){
    if(boxRef.current && !boxRef.current.contains(e.target as Node)) setOpen(false);
   }
   document.addEventListener('mousedown',onClickOutside);
