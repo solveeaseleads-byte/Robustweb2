@@ -1,0 +1,8 @@
+'use client';
+import {useState} from 'react';
+import {track} from '../lib/client-analytics';
+export default function LeadBox({problem}:{problem:string}){
+ const [email,setEmail]=useState(''); const [consent,setConsent]=useState(false); const [status,setStatus]=useState('');
+ async function submit(e:React.FormEvent){e.preventDefault(); if(!consent)return setStatus('Please give consent before submitting.'); setStatus('Sending…'); track('lead_start',undefined,{},problem); const r=await fetch('/api/lead',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email,problem,consent,eventNames:['search','tool_open','lead_start']})}); const x=await r.json().catch(()=>({})); if(x.ok){track('lead_submit');setStatus('Request received. We will only use your details for the requested solution.')}else setStatus(x.error||'Unable to submit right now.'); }
+ return <div className="card leadbox"><span className="tag">OPTIONAL HUMAN HELP</span><h2>Want a relevant solution?</h2><p>Leave your email only if you want SolveEase to follow up about the problem you described.</p><form className="lead-form" onSubmit={submit}><input type="email" value={email} onChange={e=>setEmail(e.target.value)} required placeholder="you@example.com"/><input type="text" value={problem} readOnly aria-label="Problem"/><button className="btn" type="submit">Request help</button></form><label className="consent"><input type="checkbox" checked={consent} onChange={e=>setConsent(e.target.checked)}/> I agree to be contacted about this request.</label>{status&&<div className="notice">{status}</div>}</div>
+}

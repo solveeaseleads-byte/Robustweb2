@@ -1,0 +1,9 @@
+'use client';
+import {useEffect,useState} from 'react';
+
+type Data={totalEvents:number;searches:number;leads:number;solutionClicks:number;topQueries:{query:string;count:number}[];topTools:{slug:string;count:number}[];opportunities:{title:string;reason:string;priority:string}[]};
+export default function Dashboard(){
+ const [data,setData]=useState<Data|null>(null); const [error,setError]=useState('');
+ useEffect(()=>{fetch('/api/dashboard').then(r=>r.json()).then(x=>x.ok?setData(x.insights):setError(x.error||'No data')).catch(()=>setError('Dashboard unavailable'));},[]);
+ return <main className="container"><div className="eyebrow">AUTOPILOT CONTROL CENTER</div><h1>Growth intelligence</h1><p className="lead">See what visitors are searching for, which tools attract attention, and what the platform should improve next.</p>{error&&!data?<div className="card"><b>{error}</b><p>Connect Supabase and run <code>supabase/schema.sql</code> to enable persistent analytics.</p></div>:data?<><section className="stats"><div className="card"><b>{data.totalEvents}</b><span>Events</span></div><div className="card"><b>{data.searches}</b><span>Searches</span></div><div className="card"><b>{data.leads}</b><span>Leads</span></div><div className="card"><b>{data.solutionClicks}</b><span>Solution clicks</span></div></section><section className="grid2"><div className="card"><h2>Top problems</h2>{data.topQueries.map(x=><p key={x.query}><b>{x.query}</b> <span className="muted">× {x.count}</span></p>)}</div><div className="card"><h2>Top tools</h2>{data.topTools.map(x=><p key={x.slug}><b>{x.slug}</b> <span className="muted">× {x.count}</span></p>)}</div></section><section className="card"><h2>Autopilot opportunities</h2>{data.opportunities.map(x=><div className="opportunity" key={x.title}><b>{x.title}</b><span>{x.reason} · {x.priority} priority</span></div>)}</section></>:<div className="card">Loading intelligence…</div>}</main>;
+}
