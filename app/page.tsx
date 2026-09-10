@@ -1,12 +1,21 @@
+
 'use client';
 import {useState} from 'react';
 import Link from 'next/link';
+import {useRouter} from 'next/navigation';
 import {tools,categories} from '../lib/tools';
 import {recommend} from '../lib/recommend';
 
 export default function Home(){
+ const router=useRouter();
  const [query,setQuery]=useState(''); const [results,setResults]=useState<typeof tools>([]);
- function search(e:React.FormEvent){e.preventDefault();setResults(recommend(query));document.getElementById('results')?.scrollIntoView({behavior:'smooth'});}
+ function search(e:React.FormEvent){
+  e.preventDefault();
+  const matches=recommend(query);
+  if(matches.length){router.push(`/tools/${matches[0].slug}`);return;}
+  setResults(matches);
+  document.getElementById('results')?.scrollIntoView({behavior:'smooth'});
+ }
  const featured=tools.slice(0,9); const categoryCount=categories.map(c=>({name:c,count:tools.filter(t=>t.category===c).length}));
  return <>
   <header className="nav"><div className="wrap navin"><Link className="logo" href="/">Solve<span>Ease</span></Link><nav className="navlinks"><Link href="#tools">Free Tools</Link><Link href="/search">Problem Search</Link><Link href="#how">How it works</Link><Link href="/cleaning">Cleaning</Link><Link href="/audits">Audits</Link></nav></div></header>
