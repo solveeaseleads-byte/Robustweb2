@@ -52,7 +52,7 @@ export default function Home(){
  const groupedResults=groupByCategory(results);
 
  return <>
-  <header className="nav"><div className="wrap navin"><Link className="logo" href="/">Solve<span>Ease</span></Link><nav className="navlinks"><Link href="#tools">Free Tools</Link><Link href="/search">Problem Search</Link><Link href="/audits">Audits</Link><Link href="/workflows">Workflows</Link><Link href="/cleaning">Cleaning</Link><Link href="/about">About</Link></nav></div></header>
+  <header className="nav"><div className="wrap navin"><Link className="logo" href="/">Solve<span>Ease</span></Link><nav className="navlinks"><Link href="/tools">Free Tools</Link><Link href="/search">Problem Search</Link><Link href="/audits">Audits</Link><Link href="/workflows">Workflows</Link><Link href="/cleaning">Cleaning</Link><Link href="/about">About</Link></nav></div></header>
   <main>
    <section className="hero"><div className="wrap"><span className="eyebrow">FREE BUSINESS PROBLEM-SOLVING PLATFORM</span><h1>Don't just find a tool. <br/>Find the next best solution.</h1><p>Describe a business problem in plain language. SolveEase routes you to practical calculators, diagnostics and useful solutions—starting with free tools.</p>
     <div className="searchwrap" ref={boxRef}>
