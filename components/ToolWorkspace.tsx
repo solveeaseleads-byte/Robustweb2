@@ -18,7 +18,7 @@ export default function ToolWorkspace({tool}:{tool:Tool}){
   <span className="tag">FREE CALCULATOR</span>
   <h2>Enter your numbers</h2>
   <div className="input-grid">{fields.map(f=><label key={f.key}>{f.label}<input type="number" inputMode="decimal" min={f.min} step="any" placeholder={String(f.placeholder)} onChange={e=>set(f.key,e.target.value)}/><small>{f.hint}</small></label>)}</div>
-  <div className="tool-actions"><button className="btn" onClick={run} disabled={!ready}>Calculate</button><button className="btn secondary" onClick={reset}>Reset</button></div>
+  <div className="tool-actions"><button className="btn" onClick={run}>Calculate</button><button className="btn secondary" onClick={reset}>Reset</button></div>
   {result&&<div className="result"><span className="tag">RESULT</span><strong>{result}</strong><p>Use this result as a planning estimate. Actual costs, fees and taxes may differ.</p><div className="result-actions"><button className="btn secondary" onClick={save}>Save result</button><button className="btn secondary" onClick={share}>Share</button><button className="btn secondary" onClick={()=>window.print()}>Print</button>{saved&&<span className="muted">Saved.</span>}</div></div>}
  </div>
 }
