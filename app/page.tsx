@@ -48,8 +48,7 @@ export default function Home(){
   router.push(`/tools/${slug}`);
  }
 
- const featured=tools.slice(0,9);
- const groupedFeatured=groupByCategory(featured);
+ const groupedFeatured=groupByCategory(tools);
  const groupedResults=groupByCategory(results);
 
  return <>
